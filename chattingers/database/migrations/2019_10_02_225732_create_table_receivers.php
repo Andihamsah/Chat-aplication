@@ -16,7 +16,7 @@ class CreateTableReceivers extends Migration
         Schema::create('receivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
-            $table->string('files')->nullable();
+            $table->longText('files')->nullable();
             $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('receiver_id')->unsigned();
             $table->timestamps();
