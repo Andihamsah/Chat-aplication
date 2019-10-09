@@ -9,13 +9,17 @@ class Sender extends Model
     protected $fillable = [
         'text',
         'files',
-        'sender_id'
+        'sender_id',
+        'receiver_id'
     ];
 
-    public function users()
+    public function sender()
     {
-
-        return $this->hasMany(User::class);
-
+        return $this->belongsTo(User::class,'sender_id');
+    }
+    
+    public function receiver()
+    {
+        return $this->belongsTo(User::class,'receiver_id');
     }
 }

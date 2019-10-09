@@ -14,6 +14,7 @@ class AddForeignKeyToReceivers extends Migration
     public function up()
     {
         Schema::table('receivers', function (Blueprint $table) {
+            $table->foreign('sender_id')->references('id')->on('users');
             $table->foreign('receiver_id')->references('id')->on('users');
         });
     }

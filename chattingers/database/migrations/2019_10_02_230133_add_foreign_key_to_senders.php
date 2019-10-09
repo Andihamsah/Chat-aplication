@@ -15,6 +15,7 @@ class AddForeignKeyToSenders extends Migration
     {
         Schema::table('senders', function (Blueprint $table) {
             $table->foreign('sender_id')->references('id')->on('users');
+            $table->foreign('receiver_id')->references('id')->on('users');
         });
     }
 

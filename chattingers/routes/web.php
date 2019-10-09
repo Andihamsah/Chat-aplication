@@ -14,16 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 // User
 Route::get('/tampil', 'AuthController@show');
 Route::put('/avatar/edit', 'AuthController@updateavatar');
 Route::put('/user/edit', 'AuthController@updateuser');
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
-Route::get('tampil/{id}', 'AuthController@index');
+Route::put('/user','AuthController@edit');
 
-// chat
+// Chat
 Route::get('/chat','chatController@index');
 Route::post('/chat/send','chatController@store');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
-// Route::put('/chat/edit/');

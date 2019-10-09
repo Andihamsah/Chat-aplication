@@ -13,7 +13,6 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "predis/predis": "^1.1",
         "pusher/pusher-php-server": "~4.0",
         "tymon/jwt-auth": "1.0.*"
     },
@@ -48,6 +47,8 @@
             "Tests\\": "tests/"
         }
     },
+
+
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
