@@ -42,14 +42,15 @@ class User extends Authenticatable implements JWTSubject
 
     public function sender()
     {
-        return $this->belongsTo(Sender::class,'sender_id');
+        return $this->hasMany(Sender::class);
         
     }
 
     public function receiver()
     {
-        return $this->belongsTo(Receiver::class,'receiver_id');
+        return $this->hasMany(Receiver::class);
     }
+
 
     public function getJWTIdentifier()
     {

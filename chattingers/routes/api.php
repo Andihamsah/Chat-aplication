@@ -16,14 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-// User
-Route::get('tampil/{id}', 'AuthController@index');
-Route::get('tampil', 'AuthController@show');
-Route::put('/avatar/edit', 'AuthController@updateavatar');
+
+
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
-
-// Chat
 Route::post('/chat','chatController@store');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
 // Route::apiResource('books', 'BookController');
