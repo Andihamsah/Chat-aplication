@@ -17,6 +17,7 @@ Route::get('/', function () {
 // User
 Route::get('/tampil', 'AuthController@show');
 Route::put('/avatar/edit', 'AuthController@updateavatar');
+Route::put('/user/edit', 'AuthController@updateuser');
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::get('tampil/{id}', 'AuthController@index');
