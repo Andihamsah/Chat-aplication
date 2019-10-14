@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('tampil/{id}', 'AuthController@index');
 Route::get('tampil', 'AuthController@show');
 Route::put('/avatar/edit', 'AuthController@updateavatar');
+Route::put('/user/edit', 'AuthController@updateuser');
+Route::put('/mobile/edit', 'AuthController@mobileupdate');
+Route::put('/password/edit', 'AuthController@privasi');
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
