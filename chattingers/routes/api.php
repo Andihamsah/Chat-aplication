@@ -26,7 +26,5 @@ Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
 // Chat
-Route::post('/chat','chatController@store');
+Route::post('/chat/send','chatController@store');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
-// Route::apiResource('books', 'BookController');
-// Route::post('books/{book}/ratings', 'RatingController@store');

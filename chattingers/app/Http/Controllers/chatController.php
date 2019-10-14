@@ -17,10 +17,13 @@ class chatController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index($id)
     {
-        return response()->json(User::all());
+        $user = User::whereNotIn('id',[$id])->get();
+        return response()->json($user);
+
     }
+    
     public function store(Request $request)
     {
 
@@ -31,14 +34,14 @@ class chatController extends Controller
             $send->text = $request->input('text');
             $send->files = $request->input('files');
             $send->sender_id = $request->input('sender_id');
-            $receive->receiver_id = $request->input('receiver_id');
+            $send->receiver_id = $request->input('receiver_id');
                 
     
             $receive = new Receiver;
             $receive->text = $request->input('text');
             $receive->files = $request->input('files');
-            $receive->sender_id = $request->input('sender_id');
-            $receive->receiver_id = $request->input('receiver_id');
+            $receive->receiver_id = $request->input('sender_id');
+            $receive->sender_id = $request->input('receiver_id');
 
             
 
@@ -65,17 +68,12 @@ class chatController extends Controller
 
     public function show($sender_id,$receiver_id)
     { 
-        $sender = Sender::where('sender_id',$sender_id)->get();
-        foreach ($sender as $key => $value) {
-            $value;
-        }
+        $sender = Sender::where('sender_id',$sender_id)
+                        ->where('receiver_id',$receiver_id)->get();
         
-        $receiver = Receiver::where('receiver_id',$receiver_id)->get();
-        foreach ($receiver as $key => $data) {
-            $data;
-        }
-
-        $receiver = $data;
+        $receiver = Receiver::where('receiver_id',$receiver_id)
+                            ->where('sender_id',$sender_id)->get();
+        
         return response()->json([
             'sender' => $sender,
             'receiver' => $receiver
@@ -104,7 +102,7 @@ class chatController extends Controller
             return response()->json([
                 'message' => 'Your change has been updated',
                 'sender_update' => $update
-                ]);
+            ]);
             }
         else {
             return response()->json([

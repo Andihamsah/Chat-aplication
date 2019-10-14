@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Validator;
-
+use App\Sender;
+use App\Receiver;
 class AuthController extends Controller
 {
         public function register(Request $request)
@@ -122,5 +123,140 @@ class AuthController extends Controller
                 return response()->json(['exception' => 'error']);
             
         }
+
+        public function registerDemo()
+        {
+            return view('chat.register');
+        }
+        public function loginDemo()
+        {
+            return view('chat.login');
+        }
+
+        public function storeDemo(Request $request)
+        {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:users',
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'telp' => 'required|numeric'
+            ]);
+    
+            if($validator->fails())
+            {
+                return response()->json([
+
+                    'errors' => $validator->errors()->toJson(),'status' => 400
+
+                    
+
+                ]);
+            }
+
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'avatar' => $request->avatar,
+                    'telp' => $request->telp,
+                    
+                ]);
+            $token = auth()->login($user);
+            $get = User::where('name',$request->name);
+            $id = $get->first();
+            return view('chat.login');
+
+
+        }
+
+        public function loginDemoSend(Request $request)
+            {
+                $validator = Validator::make($request->all(),
+            [
+                'name' => 'required|string|max:255',
+                'password' => 'required|unique:users',
+                
+            ]);
+
+            
+            if ($validator->fails()) 
+            {
+                return response()->json($validator->errors()->toJson(),400);
+            }
+
+            $credentials = $request->only(['name', 'password']);
+
+            if (!$token = auth()->attempt($credentials)) 
+            {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            
+            $user = User::whereNotIn('name',[$request->name])->get();
+            $get_login = User::where('name',$request->name)->get();
+            $user_login = $get_login->first();
+            $id = $user_login->id;
+            
+            return view('chat.index',compact('id','user'));     
+            }
+
+            public function demoChat($sender_id, $receiver_id)
+            {
+            
+                $sender = Sender::where('sender_id',$sender_id)
+                        ->where('receiver_id',$request->receiver_id)->get();
+                
+                $receiver = Receiver::where('receiver_id',$receiver_id)
+                                    ->where('sender_id',$sender_id)->get();
+                $receiver_id = $receiver_id;
+                $sender_id = $sender_id;
+                return view('chat.chat',compact('sender','receiver','receiver_id','sender_id'));
+            }
+
+            public function demoSendChat(Request $request)
+            {
+                            // if all data have an value
+                    if ($request->text !== null && $request->files !== null) {
+                    
+                        $send = new Sender;
+                        $send->text = $request->input('text');
+                        $send->files = $request->input('files');
+                        $send->sender_id = $request->input('sender_id');
+                        $send->receiver_id = $request->input('receiver_id');
+                            
+                
+                        $receive = new Receiver;
+                        $receive->text = $request->input('text');
+                        $receive->files = $request->input('files');
+                        $receive->receiver_id = $request->input('sender_id');
+                        $receive->sender_id = $request->input('receiver_id');
+
+                        
+
+                        if (!$receive->save() && !$send->save()) {
+                            return response()->json(['message' => 'Data failed be saved to Receiver table and Sender table']);
+                        }
+                        elseif (!$receive->save() || !$send->save()) {
+                            return response()->json(['message' => 'Data failed be saved to Receiver table or Sender table']);
+                        }
+                        else {
+                            $sender = Sender::where('sender_id',$request->sender_id)
+                            ->where('receiver_id',$request->receiver_id)->get();
+                            
+                            $receiver = Receiver::where('receiver_id',$request->receiver_id)
+                                                ->where('sender_id',$request->sender_id)->get();
+                            $receiver_id = $request->receiver_id;
+                            $sender_id = $request->sender_id;
+                            return view('chat.chat',compact('sender','receiver','receiver_id','sender_id'));
+                        }
+
+
+                    }
+
+                    // if all data sended has null value 
+                    else {
+                        return response()->json(['message' => 'Message must not empty']);
+                    }
+            }
+        
 
 }
