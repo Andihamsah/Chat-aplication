@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff8a87b6b5ce3f60179307be29dea03c",
+    "content-hash": "ff8a87b6b5ce3f60179307be29dea03c",    
+
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1569,6 +1570,7 @@
             "time": "2015-07-25T16:39:46+00:00"
         },
         {
+
             "name": "pimple/pimple",
             "version": "v3.2.3",
             "source": {
@@ -1669,6 +1671,8 @@
             "time": "2016-06-16T16:22:20+00:00"
         },
         {
+
+
             "name": "psr/container",
             "version": "1.0.0",
             "source": {

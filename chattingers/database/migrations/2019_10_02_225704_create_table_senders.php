@@ -18,6 +18,7 @@ class CreateTableSenders extends Migration
             $table->string('text');
             $table->longText('files')->nullable();
             $table->bigInteger('sender_id')->unsigned();
+            $table->bigInteger('receiver_id')->unsigned();
             $table->timestamps();
         });
     }
