@@ -41,7 +41,7 @@ class AuthController extends Controller
             $token = auth()->login($user);
             $get = User::where('name',$request->name);
             $user = $get->first();
-            return $this->respondWithToken($token,$user->id);
+            return $this->respondWithTokenOnRegister($token,$user->id);
 
 
         }
@@ -72,13 +72,22 @@ class AuthController extends Controller
             
             $get = User::where('name',$request->name)->get();                       
             $user = $get->first();            
-            // $password = $user->password;
-            // $decrypted = Crypt::decryptString($encrypted);
-            // dd($password);
+            
             
             return $this->respondWithToken($token,$user);         
 
 
+        }
+
+        protected function respondWithTokenONRegister($token,$user)
+        {
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+
+                'user' => $user
+            ]);
         }
 
         protected function respondWithToken($token,$user)
@@ -106,11 +115,7 @@ class AuthController extends Controller
         public function updateavatar(Request $req)
         {       
             $image = User::find($req->id);
-            $image->avatar = $req->avatar;  // your base64 encoded
-            // $image = str_replace('data:image/png;base64,', '', $image);
-            // $image = str_replace(' ', '+', $image);
-            // $imageName = str_random(10).'.'.'png';
-            // \File::put(storage_path(). '/' . $imageName, base64_decode($image));
+            $image->avatar = $req->avatar;
             if ($image->save()) {
                 return response()->json(['exception' => 'succes']);
             }
@@ -139,16 +144,17 @@ class AuthController extends Controller
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
-                return response()->json(['exception' => 'error']);                
+                return response()->json(['exception' => 'salah aldy']);                
             }
             elseif (is_null($req->name) && is_null($req->email) && is_null($req->telp) && isset($req->avatar)) {
-                $send->avatar = $req->avatar;
+                $send->avatar = base64_encode($req->avatar);            
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
                 return response()->json(['exception' => 'error']);
             }
-                            
+            return response()->json(['exception' => 'kesalahan backend']);
+                        
         }
 
         public function privasi(Request $req)
