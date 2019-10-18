@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Receiver;
 use App\User;
 use App\Chat;
+use App\Events\MyEvent;
 
 use Illuminate\Support\Facades\Validator;
 class chatController extends Controller
@@ -172,7 +173,7 @@ class chatController extends Controller
             return response()->json(['message' => 'Message cannot sended']);
         }
 
-        broadcast(new MyEvent($chat));
+        // broadcast(new MyEvent($chat));
 
         return response()->json($chat);
     }
