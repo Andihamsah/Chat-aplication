@@ -130,7 +130,7 @@ class chatController extends Controller
      */
     public function destroy($id)
     {
-        $destroy = Sender::find($id);
+        $destroy = Chat::find($id);
         if ($destroy->delete()) {
             return response()->json([
                 'message' => 'Chats succesfully deleted'

@@ -66,14 +66,13 @@ class AuthController extends Controller
             if (!$token = auth()->attempt($credentials)) 
             {
                 return response()->json(['error' => 'Unauthorized'], 401);
-            }
-            
+            }          
             $user = User::whereNotIn('name',[$request->name])->get();                       
             $login = User::where('name',$request->name)->get();
             $login = $login->first();
-            return $this->respondWithToken($token,$user,$login);         
+            return $this->respondWithToken($token,$user,$login);
+        }    
 
-        }
 
         protected function respondWithToken($token,$user,$login)
         {
@@ -110,11 +109,7 @@ class AuthController extends Controller
         public function updateavatar(Request $req)
         {       
             $image = User::find($req->id);
-            $image->avatar = $req->avatar;  // your base64 encoded
-            // $image = str_replace('data:image/png;base64,', '', $image);
-            // $image = str_replace(' ', '+', $image);
-            // $imageName = str_random(10).'.'.'png';
-            // \File::put(storage_path(). '/' . $imageName, base64_decode($image));
+            $image->avatar = $req->avatar;
             if ($image->save()) {
                 return response()->json(['exception' => 'succes']);
             }
@@ -143,22 +138,23 @@ class AuthController extends Controller
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
-                return response()->json(['exception' => 'error']);                
+                return response()->json(['exception' => 'salah aldy']);                
             }
             elseif (is_null($req->name) && is_null($req->email) && is_null($req->telp) && isset($req->avatar)) {
-                $send->avatar = $req->avatar;
+                $send->avatar = base64_encode($req->avatar);            
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
                 return response()->json(['exception' => 'error']);
             }
-                            
+            return response()->json(['exception' => 'kesalahan backend']);
+                        
         }
 
         public function privasi(Request $req)
         {
             $send = User::find($req->id);
-            $send->password = $req->input('password');
+            $send->password = bcrypt($req->input('password'));
             if ($send->save()) {
                 return response()->json(['exception' => 'berhasil di edit']);
             }

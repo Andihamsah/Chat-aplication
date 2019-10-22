@@ -11,15 +11,10 @@
         "php": "^7.2",
         "barryvdh/laravel-cors": "^0.11.4",
         "fideloper/proxy": "^4.0",
-        "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "monolog/monolog": "^1.22",
         "predis/predis": "^1.1",
-        "pusher/pusher-php-server": "~4.0",
-        "silex/silex": "^2.3",
-        "symfony/twig-bridge": "^3",
-        "twig/twig": "^2.0",
+        "pusher/pusher-php-server": "^4.0",
         "tymon/jwt-auth": "1.0.*"
     },
     "require-dev": {
@@ -27,8 +22,7 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0",
-        "heroku/heroku-buildpack-php": "*"
+        "phpunit/phpunit": "^8.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -54,8 +48,6 @@
             "Tests\\": "tests/"
         }
     },
-
-
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
