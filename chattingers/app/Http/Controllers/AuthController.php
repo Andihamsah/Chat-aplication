@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Sender;
 use App\Receiver;
+use App\Friend;
 class AuthController extends Controller
 {
         public function register(Request $request)
@@ -294,6 +295,39 @@ class AuthController extends Controller
                         return response()->json(['message' => 'Message must not empty']);
                     }
             }
+
+
+        public function addFriend(Request $request) {
+            $friend = User::find($request->friend_id);
+            $user = User::find($request->id);
+            $add = new Friend;
+            $add->name = $friend->name;
+            $add->email = $friend->email;
+            $add->avatar = $friend->avatar;
+            $add->password = $friend->password;
+            $add->telp = $friend->telp;
+            $add->user_id = $user->id;
+            if (!$add->save()) {
+                return response()->json(['message' => 'Failed to add friend please call customer services for fix this happens'],500);
+
+            }
+
+            return response()->json(['message' => 'Friend succesfully added']);
+
+        }
+
+        public function getFriend($id)
+        {
+            $friend = Friend::where('user_id',$id)->get();
+
+            if ($friend->count() == null) {
+                return response()->json(['message' => 'you not have any friend']);
+            }
+
+            return response()->json([
+                'friend' => $friend
+            ]);
+        }
         
 
 }

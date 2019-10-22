@@ -24,6 +24,10 @@ Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::get('tampil/{id}', 'AuthController@index');
 
+//freind 
+Route::post('friend/add','AuthController@addFriend');
+Route::get('friend/{id}','AuthController@getFriend');
+
 
 // Chat
 Route::get('/chat/{id}','chatController@index');

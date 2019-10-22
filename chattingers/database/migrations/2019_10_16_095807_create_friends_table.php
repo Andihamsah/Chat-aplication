@@ -21,7 +21,7 @@ class CreateFriendsTable extends Migration
             $table->string('password');
             $table->Integer('telp');
             $table->bigInteger('user_id')->unsigned();
-            $table->longText('avatar');
+            $table->longText('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
