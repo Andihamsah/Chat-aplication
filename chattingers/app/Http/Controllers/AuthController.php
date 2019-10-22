@@ -321,7 +321,7 @@ class AuthController extends Controller
             $friend = Friend::where('user_id',$id)->get();
 
             if ($friend->count() == null) {
-                return response()->json(['message' => 'you not have any friend']);
+                return response()->json(['message' => '']);
             }
 
             return response()->json([
