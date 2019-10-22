@@ -32,9 +32,9 @@ class MyEvent implements ShouldBroadcast
         return 'my-event';
     }
 
-    public function broadcastWith()
-    {
-        $this->message->load('fromContact');
-        return ["message" => $this->message];
-    }
+    // public function broadcastWith()
+    // {
+    //     $this->message->load('fromContact');
+    //     return ["message" => $this->message];
+    // }
 }
