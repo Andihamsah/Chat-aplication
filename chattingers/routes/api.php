@@ -30,5 +30,6 @@ Route::post('login', 'AuthController@login');
 Route::post('/chat/send','chatController@store');
 Route::delete('/chat/delete/{id}','chatController@destroy');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
+Route::get('/search','chatController@search');
 Route::get('/message/{sender_id}/{receiver_id}','chatController@getMessage');
 Route::post('/message/send','chatController@sendMessage');

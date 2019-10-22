@@ -28,6 +28,7 @@ Route::get('tampil/{id}', 'AuthController@index');
 // Chat
 Route::get('/chat/{id}','chatController@index');
 Route::delete('/chat/delete/{id}','chatController@destroy');
+Route::get('/search','chatController@search');
 Route::post('/chat/send','chatController@store');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
 
