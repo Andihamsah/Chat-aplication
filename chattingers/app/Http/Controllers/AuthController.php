@@ -154,7 +154,7 @@ class AuthController extends Controller
         public function privasi(Request $req)
         {
             $send = User::find($req->id);
-            $send->password = $req->input('password');
+            $send->password = bcrypt($req->input('password'));
             if ($send->save()) {
                 return response()->json(['exception' => 'berhasil di edit']);
             }
