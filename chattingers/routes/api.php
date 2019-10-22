@@ -26,6 +26,11 @@ Route::put('/password/edit', 'AuthController@privasi');
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
+//freind 
+Route::post('friend/add','AuthController@addFriend');
+Route::get('friend/{id}','AuthController@getFriend');
+
+
 // Chat
 Route::post('/chat/send','chatController@store');
 Route::delete('/chat/delete/{id}','chatController@destroy');
