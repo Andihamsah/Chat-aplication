@@ -25,14 +25,14 @@ Route::post('/login', 'AuthController@login');
 Route::get('tampil/{id}', 'AuthController@index');
 
 //freind 
-Route::post('friend/add','AuthController@addFriend');
+Route::post('friend/{id_login}/{friend_id}','AuthController@addFriend');
 Route::get('friend/{id}','AuthController@getFriend');
 
 
 // Chat
 Route::get('/chat/{id}','chatController@index');
 Route::delete('/chat/delete/{id}','chatController@destroy');
-Route::get('/search','chatController@search');
+Route::post('/search','chatController@search');
 Route::post('/chat/send','chatController@store');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
 

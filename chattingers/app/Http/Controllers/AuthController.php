@@ -131,24 +131,24 @@ class AuthController extends Controller
 
         public function mobileupdate(Request $req)
         {
-            $send = User::find($req->id);
-            if (isset($req->name) && isset($req->email) && isset($req->telp) && is_null($req->avatar)) {
+            if (isset($req->id) && isset($req->name) && isset($req->email) && isset($req->telp) && is_null($req->avatar)) {
+                $send = User::find($req->id);
                 $send->name = $req->name;
-                $send->email = $req->email;            
+                $send->email = $req->email;
                 $send->telp = $req->telp;
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
                 return response()->json(['exception' => 'salah aldy']);                
             }
-            elseif (is_null($req->name) && is_null($req->email) && is_null($req->telp) && isset($req->avatar)) {
+            elseif (isset($req->id) && is_null($req->name) && is_null($req->email) && is_null($req->telp) && isset($req->avatar)) {
+                $send = User::find($req->id);
                 $send->avatar = base64_encode($req->avatar);            
                 if ($send->save()) {
                     return response()->json(['exception' => 'berhasil di edit']);
                 }
                 return response()->json(['exception' => 'error']);
             }
-            return response()->json(['exception' => 'kesalahan backend']);
                         
         }
 
@@ -297,16 +297,16 @@ class AuthController extends Controller
             }
 
 
-        public function addFriend(Request $request) {
-            $friend = User::find($request->friend_id);
-            $user = User::find($request->id);
+        public function addFriend($friend_id, $id_login) {
+            $friend = User::find($friend_id);
+            $user = User::find($id_login);
             $add = new Friend;
             $add->name = $friend->name;
             $add->email = $friend->email;
             $add->avatar = $friend->avatar;
             $add->password = $friend->password;
             $add->telp = $friend->telp;
-            $add->user_id = $user->id;
+            $add->user_id = $id_login;
             if (!$add->save()) {
                 return response()->json(['message' => 'Failed to add friend please call customer services for fix this happens'],500);
 

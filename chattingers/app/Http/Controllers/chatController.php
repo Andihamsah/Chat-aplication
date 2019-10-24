@@ -30,9 +30,13 @@ class chatController extends Controller
 
     public function search(Request $req)
     {
-        $search = $req->has('cari');
-        $search = User::where("name", "LIKE", "%".$req->cari."%")->get();
-        return response()->json($search);
+        if ($req->has('cari')) {
+            $search = User::where("name", "LIKE", "%".$req->cari."%")->get();
+            return response()->json($search);
+        }else {
+            return response()->json(['massage' => '']);
+        }
+        
     }
     
     public function store(Request $request)
