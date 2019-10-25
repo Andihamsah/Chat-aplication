@@ -33,7 +33,7 @@ class AuthController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => bcrypt($request->password),
-                    'avatar' => $request->avatar,
+                    'avatar' => asset('img/defaultAvatar.svg'),
                     'telp' => $request->telp,
                 ]);
             
@@ -297,7 +297,7 @@ class AuthController extends Controller
             }
 
 
-        public function addFriend($friend_id, $id_login) {
+        public function addFriend($id_login, $friend_id) {
             $friend = User::find($friend_id);
             $user = User::find($id_login);
             $add = new Friend;
@@ -305,6 +305,7 @@ class AuthController extends Controller
             $add->email = $friend->email;
             $add->avatar = $friend->avatar;
             $add->password = $friend->password;
+            $add->friend_id = $friend->id;
             $add->telp = $friend->telp;
             $add->user_id = $id_login;
             if (!$add->save()) {
@@ -329,5 +330,14 @@ class AuthController extends Controller
             ]);
         }
         
+        public function unfriend($id,$user_id)
+        {
+            $friend = Friend::where('id', $id)
+                            ->where('user_id', $user_id);
+            if ($friend->delete()) {
+                return response()->json(['message' => ""]);
+            }
+            return response()->json(['message' => "fail delete"]);
+        }
 
 }

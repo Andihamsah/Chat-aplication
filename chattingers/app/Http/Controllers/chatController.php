@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Receiver;
 use App\User;
 use App\Chat;
+use App\Friend;
 use App\Events\MyEvent;
 
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +32,11 @@ class chatController extends Controller
     public function search(Request $req)
     {
         if ($req->has('cari')) {
-            $search = User::where("name", "LIKE", "%".$req->cari."%")->get();
+            $friend = Friend::all();
+            $friend = $friend->where('id',$friend->id);
+            dd($friend);
+            $search = User::whereNotIn('id', [$friend->friend_id])
+                            ->where("name", "LIKE", "%".$req->cari."%")->get();
             return response()->json($search);
         }else {
             return response()->json(['massage' => '']);

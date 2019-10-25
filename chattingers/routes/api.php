@@ -29,6 +29,7 @@ Route::post('login', 'AuthController@login');
 //freind 
 Route::post('friend/{id_login}/{friend_id}','AuthController@addFriend');
 Route::get('friend/{id}','AuthController@getFriend');
+Route::delete('unfriend/{id}/{userid}','AuthController@unfriend');
 
 
 // Chat

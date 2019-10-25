@@ -15,12 +15,13 @@ class CreateFriendsTable extends Migration
     {
         Schema::create('friends', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->Integer('telp');
             $table->bigInteger('user_id')->unsigned();
+            $table->integer('friend_id');
             $table->longText('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();

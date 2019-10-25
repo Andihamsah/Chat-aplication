@@ -7,11 +7,12 @@ use App\User;
 class Friend extends Model
 {
     protected $fillable = [
-        'name', 'email', 'password', 'telp','avatar','user_id'
+        'name', 'email', 'password', 'telp','avatar','user_id', 'friend_id'
     ];
 
     public function users() 
     {
         return belongsTo(User::class,'user_id');
     }
+    
 }
