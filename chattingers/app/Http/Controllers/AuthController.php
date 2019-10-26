@@ -298,22 +298,27 @@ class AuthController extends Controller
 
 
         public function addFriend($id_login, $friend_id) {
-            $friend = User::find($friend_id);
+            $friend = User::find($friend_id);            
             $user = User::find($id_login);
-            $add = new Friend;
-            $add->name = $friend->name;
-            $add->email = $friend->email;
-            $add->avatar = $friend->avatar;
-            $add->password = $friend->password;
-            $add->friend_id = $friend->id;
-            $add->telp = $friend->telp;
-            $add->user_id = $id_login;
-            if (!$add->save()) {
-                return response()->json(['message' => 'Failed to add friend please call customer services for fix this happens'],500);
+            $friendcount = Friend::where('friend_id', $friend->id)->get()->count();
+            
+            if ($friendcount <= 0) {
+                $add = new Friend;
+                $add->name = $friend->name;
+                $add->email = $friend->email;
+                $add->avatar = $friend->avatar;
+                $add->password = $friend->password;
+                $add->friend_id = $friend->id;
+                $add->telp = $friend->telp;
+                $add->user_id = $id_login;
+                if ($add->save()) {
+                    return response()->json(['message' => 'Friend succesfully added']);
+    
+                }
+            }else {
+                return response()->json(['message' => '']);
+            }                
 
-            }
-
-            return response()->json(['message' => 'Friend succesfully added']);
 
         }
 
@@ -332,8 +337,7 @@ class AuthController extends Controller
         
         public function unfriend($id,$user_id)
         {
-            $friend = Friend::where('id', $id)
-                            ->where('user_id', $user_id);
+            $friend = Friend::where('id', $id);
             if ($friend->delete()) {
                 return response()->json(['message' => ""]);
             }

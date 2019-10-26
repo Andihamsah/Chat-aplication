@@ -31,11 +31,8 @@ class chatController extends Controller
 
     public function search(Request $req)
     {
-        if ($req->has('cari')) {
-            $friend = Friend::all();
-            $friend = $friend->where('id',$friend->id);
-            dd($friend);
-            $search = User::whereNotIn('id', [$friend->friend_id])
+        if ($req->has('cari')) {          
+            $search = User::whereNotIn('id', [$req->id])
                             ->where("name", "LIKE", "%".$req->cari."%")->get();
             return response()->json($search);
         }else {
