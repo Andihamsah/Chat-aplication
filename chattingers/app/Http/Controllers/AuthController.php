@@ -300,7 +300,8 @@ class AuthController extends Controller
         public function addFriend($id_login, $friend_id) {
             $friend = User::find($friend_id);            
             $user = User::find($id_login);
-            $friendcount = Friend::where('friend_id', $friend->id)->get()->count();
+            $friendcount = Friend::where('user_id', $id_login)
+                                ->where('friend_id', $friend->id)->get()->count();
             
             if ($friendcount <= 0) {
                 $add = new Friend;
