@@ -30,8 +30,8 @@ class chatController extends Controller
     }
 
     public function search(Request $req)
-    {
-        if ($req->has('cari')) {          
+    {        
+        if ($req->has('cari')) {
             $search = User::whereNotIn('id', [$req->id])
                             ->where("name", "LIKE", "%".$req->cari."%")->get();
             return response()->json($search);
