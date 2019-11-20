@@ -17,6 +17,7 @@ class CreateTableReceivers extends Migration
             $table->bigIncrements('id');
             $table->string('text');
             $table->longText('files')->nullable();
+            $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('receiver_id')->unsigned();
             $table->timestamps();
         });

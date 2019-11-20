@@ -20,11 +20,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('tampil/{id}', 'AuthController@index');
 Route::get('tampil', 'AuthController@show');
 Route::put('/avatar/edit', 'AuthController@updateavatar');
+Route::put('/user/edit', 'AuthController@updateuser');
+Route::put('/mobile/edit', 'AuthController@mobileupdate');
+Route::put('/password/edit', 'AuthController@privasi');
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
+//freind 
+Route::post('friend/{id_login}/{friend_id}','AuthController@addFriend');
+Route::get('friend/{id}','AuthController@getFriend');
+Route::delete('unfriend/{id}/{userid}','AuthController@unfriend');
+
+
 // Chat
-Route::post('/chat','chatController@store');
+Route::post('/chat/send','chatController@store');
+Route::delete('/chat/delete/{id}','chatController@destroy');
 Route::get('/chat/show/{sender_id}/{receiver_id}','chatController@show');
-// Route::apiResource('books', 'BookController');
-// Route::post('books/{book}/ratings', 'RatingController@store');
+Route::post('/search','chatController@search');
+Route::get('/message/{sender_id}/{receiver_id}','chatController@getMessage');
+Route::post('/message/send','chatController@sendMessage');

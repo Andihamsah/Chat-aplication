@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Sender;
 use App\Receiver;
+use App\Friend;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -42,14 +43,20 @@ class User extends Authenticatable implements JWTSubject
 
     public function sender()
     {
-        return $this->belongsTo(Sender::class,'sender_id');
+        return $this->hasMany(Sender::class);
         
     }
 
     public function receiver()
     {
-        return $this->belongsTo(Receiver::class,'receiver_id');
+        return $this->hasMany(Receiver::class);
     }
+
+    public function friend()
+    {
+        return $this->hasMany(Friend::class);
+    }
+
 
     public function getJWTIdentifier()
     {
